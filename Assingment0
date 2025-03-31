@@ -1,0 +1,133 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "toc_visible": true,
+      "authorship_tag": "ABX9TyP9oZoLEu7+xxFfuIlv33UG",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/WachirayaPhikulsri/Assignment0/blob/main/Assingment0\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from collections import Counter\n",
+        "\n",
+        "def count_runs(trials):\n",
+        "\n",
+        "    runs = Counter()\n",
+        "    current_run = 0\n",
+        "    for outcome in trials:\n",
+        "        if outcome == 1:\n",
+        "            current_run += 1\n",
+        "        else:\n",
+        "            if current_run > 0:\n",
+        "                runs[current_run] += 1\n",
+        "                current_run = 0\n",
+        "\n",
+        "    if current_run > 0:\n",
+        "        runs[current_run] += 1\n",
+        "    return runs\n",
+        "print(count_runs([0, 1, 0, 1, 1, 0, 0, 0, 0, 1]))\n",
+        "import numpy as np\n",
+        "random_trials = np.random.randint(0, 2, 1000000)\n",
+        "print(count_runs(random_trials))\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Y2OcloQY6VFL",
+        "outputId": "4908181c-d314-4f80-cd99-fe3b85263741"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Counter({1: 2, 2: 1})\n",
+            "Counter({1: 125241, 2: 62604, 3: 31198, 4: 15645, 5: 7802, 6: 3970, 7: 1887, 8: 971, 9: 496, 10: 254, 11: 129, 12: 62, 13: 32, 14: 10, 16: 5, 15: 3, 18: 1})\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from collections import Counter\n",
+        "\n",
+        "def count_runs(trials):\n",
+        "\n",
+        "    runs = Counter()\n",
+        "    current_run = 0\n",
+        "    for outcome in trials:\n",
+        "        if outcome == 1:\n",
+        "            current_run += 1\n",
+        "        else:\n",
+        "            if current_run > 0:\n",
+        "                runs[current_run] += 1\n",
+        "                current_run = 0\n",
+        "\n",
+        "    if current_run > 0:\n",
+        "        runs[current_run] += 1\n",
+        "    return runs\n",
+        "\n",
+        "def run_prob(expts, n, k, p):\n",
+        "    success_experiments = 0\n",
+        "    for _ in range(expts):\n",
+        "\n",
+        "        trials = (np.random.rand(n) < p).astype(int)\n",
+        "\n",
+        "        runs = count_runs(trials)\n",
+        "\n",
+        "        if any(run_length >= k for run_length in runs):\n",
+        "            success_experiments += 1\n",
+        "    return success_experiments / expts\n",
+        "prob_run_5 = run_prob(expts=100000, n=100, k=5, p=0.5)\n",
+        "print(\"Probability (n=100, k=5, p=0.5):\", prob_run_5)\n",
+        "\n",
+        "prob_run_7 = run_prob(expts=100000, n=100, k=7, p=0.7)\n",
+        "print(\"Probability (n=100, k=7, p=0.7):\", prob_run_7)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ECTOIhEO6xNL",
+        "outputId": "a740003a-e687-4f0a-c0c0-5d564132a80e"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Probability (n=100, k=5, p=0.5): 0.80872\n",
+            "Probability (n=100, k=7, p=0.7): 0.94973\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
